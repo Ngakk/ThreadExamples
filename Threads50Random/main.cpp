@@ -3,23 +3,30 @@
 #include <windows.h>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
+#include <math.h>
 #define NTHREADS 5
-#define NVALUES 50
+#define NVALUES 49
 
 using namespace std;
 int valores[NVALUES];
-int contador = 0;
+
 
 void* thread_function(void *id)
 {
     long tid = (long)id;
     printf("Thread number %d\n", tid);
-    while(contador < NVALUES){
-        srand( time(NULL) + contador );
-        valores[contador] = (rand() % 100) + 1;
-        printf("Hilo %d agrego: %d\n", tid, valores[contador]);
+    ///Defining cycles
+    int times = ceil((double)NVALUES/(double)NTHREADS);
+    if(NVALUES%NTHREADS <= tid && NVALUES%NTHREADS != 0)
+        times--;
+    ///Populating
+
+    for(int contador = 0; contador < times; contador++){
+        srand( time(NULL) + tid);
+        int pos = contador*NTHREADS + tid;
+        valores[pos] = (rand() % 100) + 1;
+        printf("Hilo %d agrego: %d en posicion %d\n", tid, valores[contador], pos);
         Sleep(1);
-        contador++;
     }
     return NULL;
 }

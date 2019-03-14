@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1552589146 source:c:\users\alumno.g00\documents\salamán\multijugador\threadexamples\threads lemillion\main.cpp
+	<stdio.h>
+	<iostream>
+	<pthread.h>
+	<windows.h>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+

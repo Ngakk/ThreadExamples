@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1552589859 source:c:\users\alumno.g00\documents\salamán\multijugador\threadexamples\thread bubble sort\main.cpp
+	<stdio.h>
+	<iostream>
+	<pthread.h>
+	<windows.h>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+
