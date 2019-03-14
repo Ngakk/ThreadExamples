@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1552062475 source:c:\users\alumno\documents\salamán\multijugador\threads\threads50random\main.cpp
+	<stdio.h>
+	<pthread.h>
+	<windows.h>
+	<stdlib.h>
+	<time.h>
+

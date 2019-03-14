@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1552060900 source:c:\users\alumno\documents\salamán\multijugador\threads\threadabc\main.cpp
+	<stdio.h>
+	<pthread.h>
+	<windows.h>
+
