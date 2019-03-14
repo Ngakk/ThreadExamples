@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1551983281 source:c:\users\alumno.g00\documents\salamán\multijugador\threads2\main.cpp
+	<iostream>
+	<pthread.h>
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
