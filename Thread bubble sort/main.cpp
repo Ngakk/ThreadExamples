@@ -9,7 +9,8 @@
 #define NVALUES 70000
 
 using namespace std;
-int valores[5][NVALUES];
+int valores[NTHREADS][NVALUES];
+bool useThreads = true;
 
 ///Ayudara a tomar tiempo de procesamiento
 clock_t start, endt;
@@ -22,7 +23,7 @@ void Stop_record()
 {
     endt = clock();
     msecs = ((double) (endt - start)) / CLOCKS_PER_SEC;
-    cout << msecs << " ms" << endl;
+    cout << msecs << " s" << endl;
 }
 
 void OrdenamientoBurbuja(int *_lista, int _size)
@@ -48,50 +49,60 @@ void* thread_function(void *id)
     long tid = (long)id;
     printf("Thread number %d\n", tid);
 
-    ///Defining cycles
-    int times = ceil((double)NVALUES/(double)NTHREADS);
-    if(NVALUES%NTHREADS <= tid && NVALUES%NTHREADS != 0)
-        times--;
-
-
+    OrdenamientoBurbuja(valores[tid], NVALUES);
 
     return NULL;
 }
 
 int main()
 {
+    pthread_t thread_id[NTHREADS];
+
     //Init
     srand( time(NULL) );
 
-    printf("Filling arrays...\n");
+
+    printf("Filling arrays... ");
+    Start_record();
     for(int i = 0; i < NVALUES; i++)
     {
-        for(int j = 0; j < 5; j++)
+        for(int j = 0; j < NTHREADS; j++)
         {
             valores[j][i] = (rand()%200000) - 100000;
         }
     }
-
-    system("cls");
-    printf("Ordering on main...");
-
-    Start_record();
-    for(int i = 0; i < 5; i++)
-        OrdenamientoBurbuja(valores[i], NVALUES);
     Stop_record();
 
-    /*printf("Ordering on threads...");
-    pthread_t thread_id[NTHREADS];
-    ///Creo hilos
-    for(int i = 0; i < NTHREADS; i++)
+
+    if(!useThreads)
     {
-        pthread_create( &thread_id[i], NULL, thread_function, (void *)i );
+        printf("Ordering on main... ");
+
+        Start_record();
+        for(int i = 0; i < 5; i++)
+            OrdenamientoBurbuja(valores[i], NVALUES);
+        Stop_record();
     }
-    ///Esperamos que terminen
-    for(int i=0; i < NTHREADS; i++)
+    else
     {
-        pthread_join( thread_id[i], NULL);
-    }*/
+        printf("Ordering on threads... \n");
+
+        Start_record();
+        ///Creo hilos
+        for(int i = 0; i < NTHREADS; i++)
+        {
+            pthread_create( &thread_id[i], NULL, thread_function, (void *)i );
+        }
+        ///Esperamos que terminen
+        for(int i=0; i < NTHREADS; i++)
+        {
+            pthread_join( thread_id[i], NULL);
+        }
+        Stop_record();
+    }
+
+
+
 
     return 0;
 }
