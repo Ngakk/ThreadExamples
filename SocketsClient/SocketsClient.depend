@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1553194921 source:c:\users\alumno.g00\documents\salamán\multijugador\threadexamples\socketsclient\main.cpp
+	<stdio.h>
+	<winsock2.h>
+
