@@ -8,3 +8,12 @@
 	<time.h>
 	<math.h>
 
+1552664221 source:c:\users\alumno\documents\salamán\multijugador\threads\threadexamples\thread bubble sort\main.cpp
+	<stdio.h>
+	<iostream>
+	<pthread.h>
+	<windows.h>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+
