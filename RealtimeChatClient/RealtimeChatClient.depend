@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1553797144 source:c:\users\alumno.g00\documents\salamán\multijugador\threadexamples\realtimechatclient\main.cpp
+	<stdio.h>
+	<winsock2.h>
+	<string.h>
+	<iostream>
+	<pthread.h>
+	<windows.h>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+
