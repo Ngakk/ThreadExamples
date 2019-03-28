@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <winsock2.h>
+#include <string.h>
 
 using namespace std;
 
@@ -13,6 +14,8 @@ int main()
 
     char msg[100];
     char message[100];
+    char exitMessage[100] = "salir";
+
     ///Iniciar winsock version 2.2
     int error = WSAStartup(MAKEWORD(2, 2), &wsData);
 
@@ -47,19 +50,7 @@ int main()
     puts("Esperamos cliente");
     client = accept(server, NULL, NULL); ///Esperamos conexion de cliente
 
-    ///mandamos Hola! mundo por socket
-    sprintf(msg, "Hola mundo desde servidor!\n");
-    if(send(client, msg, sizeof(msg), 0) != sizeof(msg))
-    {
-        puts("Coneccion perdida");
-        closesocket(server);
-        closesocket(client);
-        WSACleanup();
-        Sleep(4000);
-        return EXIT_FAILURE;
-    }
-
-    while(msg != "salir" || message != "salir")
+    while(strncmp(msg, "salir", 5) != 0 || strncmp(message, "salir", 5) != 0)
     {
         ///ahora esperamos mensaje del cliente
         memset(msg, 0, sizeof(msg)); //limpiamos buffer
@@ -74,15 +65,14 @@ int main()
         }
         else
         {
-            printf("Cliente: %s\n", msg);
+            printf("Cliente: %s", msg);
         }
 
-        if(msg == "salir") break;
+        if(strncmp(msg, "salir", 5) == 0) break;
+
         ///ahora nosotros contestamos
         printf("Yo: ");
-        scanf("%s", message);
-        //gets(message);
-        //sprintf(message, "Hola mundo desde cliente!\n");
+        fgets(message, 100, stdin);
 
         if(send(client, message, sizeof(message), 0) != sizeof(message))
         {

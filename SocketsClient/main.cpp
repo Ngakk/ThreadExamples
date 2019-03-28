@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <winsock2.h>
-#include <string>
+#include <string.h>
 
 using namespace std;
 
@@ -14,6 +14,7 @@ int main()
     char ipAddr[15];
     char message[100];
     char msg[100];
+    char exitMessage[100] = "salir";
     int port = 6590;    ///puerto que usara el cliente
 
     int error = WSAStartup(MAKEWORD(2, 2), &wsData);
@@ -47,29 +48,13 @@ int main()
     }
 
     puts("Cliente ya se conecto; \n");
-    ///preparamos buffer
-    memset(message, 0, sizeof(message));
-    if(recv(client, message, sizeof(message), 0) != sizeof(message))
-    {
 
-        puts("Nada recibido");
-        closesocket(client);
-        WSACleanup();
-        Sleep(4000);
-        return EXIT_FAILURE;
-    }
-
-    ///mensaje del servidor
-    printf("Servidor : %s", message);
-
-    while(message != "salir")
+    while(strncmp(message, "salir", 5) != 0 || strncmp(msg, "salir", 5) != 0)
     {
 
         ///ahora nosotros contestamos
         printf("Yo: ");
-        scanf("%s", message);
-        //gets(message);
-        //sprintf(message, "Hola mundo desde cliente!\n");
+        fgets(message, 100, stdin);
 
         if(send(client, message, sizeof(message), 0) != sizeof(message))
         {
@@ -80,9 +65,7 @@ int main()
             return EXIT_FAILURE;
         }
 
-        if( memcmp( message, "salir", strlen( "salir") )) == 0 ) {
-            break;
-        }
+        if(strncmp(message, "salir", 5) == 0) break;
 
          ///ahora esperamos mensaje del servidor
         memset(msg, 0, sizeof(msg)); //limpiamos buffer
@@ -96,7 +79,7 @@ int main()
         }
         else
         {
-            printf("Servidor: %s\n", msg);
+            printf("Servidor: %s", msg);
         }
 
     }
